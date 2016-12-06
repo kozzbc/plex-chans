@@ -1,11 +1,11 @@
 ######################################################################################
 #                                                                                    #
-#                           G2G.fm (BY TEHCRUCIBLE) - v0.11                          #
+#                           Mormon Channel (BY Kozzbc) - v0.01                          #
 #                                                                                    #
 ######################################################################################
 
-TITLE = "g2g.fm"
-PREFIX = "/video/g2gfm"
+TITLE = "Mormon Channel"
+PREFIX = "/video/LDSVid"
 
 ART = "art-default.jpg"
 ICON = "icon-default.png"
