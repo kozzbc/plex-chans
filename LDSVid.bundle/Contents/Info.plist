@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.plexapp.plugins.g2gfm</string>
+	<string>com.plexapp.plugins.LDSVid</string>
 	<key>PlexFrameworkVersion</key>
 	<string>2</string>
 	<key>PlexClientPlatforms</key>
