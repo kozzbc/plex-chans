@@ -66,4 +66,4 @@ Changelog
 Donate
 ======
 
-Like my work?  [Buy me a coffee.](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JUV2JAVFXY86Q)  =)
+Like my work?  [Buy me a coffee.](https://www.paypal.com)  =)
