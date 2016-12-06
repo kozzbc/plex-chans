@@ -45,8 +45,8 @@ def MainMenu():
 
     oc = ObjectContainer()
     oc.add(DirectoryObject(
-        key=Callback(ShowCategory, title="Movies", category="/movies", href='/movies/index.php?&page=1'),
-        title="Movies", thumb=R(ICON_MOVIES)
+        key=Callback(LiveCategory, title="Videos", category="/movies", href=''),
+        title="Videos", thumb=R(ICON_MOVIES)
         ))
     oc.add(DirectoryObject(
         key=Callback(ShowCategory, title="TV Series", category="/tvseries", href='/tvseries/index.php?&page=1'),
@@ -132,6 +132,24 @@ def DomainTest():
         return MessageContainer('Error', message %Dict['site_url'])
     else:
         return False
+######################################################################################
+@route(PREFIX + "live/category")
+def LiveCategory(title):
+    oc = ObjectContainer(title2=title)
+    html = HTML.ElementFromURL(url)
+    for video in html.xpath('//div/nav/ul/li/ul/li/'):
+        url = video.xpath('./div/a//@href')[0]
+        title = video.xpath('//div/nav/ul/li[2]/a[@href]/text()')
+        oc.add(VideoClipObject(
+            url = url,
+            title = title,
+            thumb = Resource.ContentsOfURLWithFallback(thumb, fallback=R(ICON))))
+        if len(oc) < 1:
+            Log ('Still no value for objects')
+            return ObjectContainer(header="Empty", message="Unable to display videos for this page right now.")
+    return oc
+
+
 
 ######################################################################################
 @route(PREFIX + "/show/category")
@@ -440,30 +458,3 @@ def clean_url(href):
     return url
 
 ######################################################################################
-@route(PREFIX + '/get_thumb')
-def get_thumb(url, fallback_icon=None, fallback_url=None):
-    if 'prx.proxy' in url:
-        r = HTTP.Request(url, immediate=True, method='GET')
-        if r:
-            img_data = r.content
-            if img_data:
-                ext = '.'+url.rsplit('.', 1)[1]
-                mime_type = {
-                    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
-                    '.gif': 'image/gif',  '.tiff': 'image/tiff', '.bmp': 'image/bmp'
-                    }.get(ext, '*/*')
-
-                return DataObject(img_data, mime_type)
-            else:
-                Log.Error(u'* No image data for \'{}\''.format(url))
-        else:
-            Log.Error(u'* Cannot access \'{}\''.format(url))
-    elif url:
-        return Redirect(url)
-
-    if fallback_icon:
-        return Redirect(R(fallback_icon))
-    elif fallback_url:
-        return Redirect(fallback_url)
-
-    return Redirect(R(ICON_COVER))
